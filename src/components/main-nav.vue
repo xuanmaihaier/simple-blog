@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watch, ref, computed } from 'vue'
+import { watch, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { SkinOutlined } from '@ant-design/icons-vue'
@@ -20,7 +20,7 @@ watch(
   },
   { deep: true }
 )
-const themefontColor = computed(() => store.state.themefontColor)
+
 const switchTheme = (checked: boolean | string | number, event: Event) => {
   store.dispatch('triggerTheme', checked)
 }
@@ -46,7 +46,7 @@ const back = () => {
       <a-switch
         v-model:checked="store.state.theme"
         checkedValue="dark"
-        :unCheckedValue="null"
+        unCheckedValue="light"
         size="small"
         @click="switchTheme"
         :loading="store.state.themeLoading"
@@ -68,11 +68,5 @@ const back = () => {
 }
 :deep(.ant-page-header-heading-extra) {
   margin: 8px 0;
-}
-:deep(.ant-page-header) {
-  &-heading-title,
-  &-back-button {
-    color: v-bind(themefontColor);
-  }
 }
 </style>

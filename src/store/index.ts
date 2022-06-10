@@ -3,10 +3,11 @@ import createPersistedState from 'vuex-persistedstate'
 import { ConfigProvider } from 'ant-design-vue'
 export default createStore({
   state: {
-    theme: null,
+    theme: 'light',
     themeLoading: false,
     themeBackground: '#fff',
     themefontColor: '#000',
+    themeSelectColor: '#18a05830',
   },
   mutations: {
     // 切换主题并保存本地
@@ -18,6 +19,7 @@ export default createStore({
       state.theme = theme
       state.themeBackground = theme === 'dark' ? '#333' : '#fff'
       state.themefontColor = theme === 'dark' ? '#fff' : '#000'
+      state.themeSelectColor = theme === 'dark' ? '#63e2b730' : '#18a05830'
       ConfigProvider.config({
         theme: {
           primaryColor: theme,
