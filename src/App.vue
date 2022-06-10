@@ -7,6 +7,9 @@ store.dispatch('triggerTheme', store.state.theme)
 const themefontColor = computed(() => store.state.themefontColor)
 const themeBackground = computed(() => store.state.themeBackground)
 const themeSelectColor = computed(() => store.state.themeSelectColor)
+const themeBorderColor = computed(() => store.state.themeBorderColor)
+const themeActiveColor = computed(() => store.state.themeActiveColor)
+const themeHoverColor = computed(() => store.state.themeHoverColor)
 </script>
 
 <template>
@@ -18,9 +21,7 @@ const themeSelectColor = computed(() => store.state.themeSelectColor)
       </a-col>
       <a-col>
         <main-nav />
-        <router-link to="/"> home </router-link>
-        <router-link to="/profile"> profile </router-link>
-        <router-view />
+        <router-view class="content-wrap" />
       </a-col>
     </a-row>
   </a-config-provider>
@@ -34,6 +35,7 @@ const themeSelectColor = computed(() => store.state.themeSelectColor)
   color: v-bind(themefontColor);
 }
 :deep(.ant-page-header) {
+  border: 1px solid v-bind(themeBorderColor) !important;
   &-heading-title,
   &-back-button {
     color: v-bind(themefontColor);
@@ -41,16 +43,30 @@ const themeSelectColor = computed(() => store.state.themeSelectColor)
 }
 :deep(.ant-layout-sider) {
   background: v-bind(themeBackground);
+  // border: 1px solid v-bind(themeBorderColor);
+}
+:deep(.content-wrap) {
+  border: 1px solid v-bind(themeBorderColor);
 }
 :deep(.ant-menu) {
   background: v-bind(themeBackground);
+  color: v-bind(themefontColor);
+  font-weight: 700;
   &-item {
     width: 95% !important;
     margin-right: 5%;
     border-radius: 40px;
   }
+  > li:hover {
+    background-color: v-bind(themeHoverColor);
+    color: v-bind(themefontColor);
+  }
 }
 :deep(.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected) {
   background: v-bind(themeSelectColor);
+  color: v-bind(themeActiveColor);
+}
+:deep(.ant-switch-checked) {
+  background: #63e2b790;
 }
 </style>

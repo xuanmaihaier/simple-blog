@@ -1,24 +1,33 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useStore } from 'vuex'
+import { nextTick, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import { SkinOutlined } from '@ant-design/icons-vue'
-const store = useStore()
+const router = useRouter()
 let collapsed = ref<boolean>(false)
-let selectedKeys = ref<string[]>(['1'])
+let routers = [
+  {
+    path: '/',
+    name: '首页',
+  },
+  {
+    path: '/profile',
+    name: '我的',
+  },
+]
 </script>
 
 <template>
   <a-layout style="min-height: 100vh">
     <a-layout-sider v-model:collapsed="collapsed" collapsible>
-      <div class="logo" />
-      <a-menu v-model:selectedKeys="selectedKeys" mode="inline">
-        <a-menu-item key="1">
+      <div class="logo">icon占位</div>
+      <a-menu :selectedKeys="[router.currentRoute.value.path]" mode="inline">
+        <a-menu-item
+          v-for="(item, index) in routers"
+          :key="item.path"
+          @click="router.push(item.path)"
+        >
           <SkinOutlined />
-          <span>广场</span>
-        </a-menu-item>
-        <a-menu-item key="2">
-          <SkinOutlined />
-          <span>话题</span>
+          <span>{{ item.name }}</span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
@@ -29,7 +38,6 @@ let selectedKeys = ref<string[]>(['1'])
 .logo {
   height: 32px;
   margin: 16px;
-  background: rgba(255, 255, 255, 0.3);
 }
 :deep(.ant-layout-sider-trigger) {
   display: none;
